@@ -10,21 +10,22 @@
 	<style type="text/css">
 		body {
   		margin-top: 1.0em;
-  		background-color: #5c7284;
+  		background-color: #ffffff;
 		  font-family: "Helvetica,Arial,FreeSans";
-  		color: #ffffff;
+  		color: #222222;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-		h1 { font-size: 3.8em; color: #a38d7b; margin-bottom: 3px; }
+    ul {margin-top:-10px}
+		h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
 		h1 .small { font-size: 0.4em; }
 		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #a38d7b; }
-    h3 { text-align: center; color: #a38d7b; }
-    a { color: #a38d7b; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+		h2 { font-size: 1.5em; color: #000000; }
+    h3 { text-align: center; color: #000000; }
+    a { color: #33b; font-weight:bold; text-decoration: none }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic; text-align:center}
     .download { float: right; }
 		pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
@@ -45,23 +46,35 @@
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="http://github.com/globalcitizen/lxc-gentoo">lxc-gentoo</a>
-      <span class="small">by <a href="http://github.com/globalcitizen">globalcitizen</a></span></h1>
+    <img src="glogo-small.png" style="float:left;margin-right:30px"><br>
+    <h1 style="margin-top:10px"><a style="color:#000" href="http://github.com/globalcitizen/lxc-gentoo">lxc-gentoo</a></h1>
+      <!-- <span class="small">by <a href="http://github.com/globalcitizen">globalcitizen</a></span></h1> -->
+
+<hr>
 
     <div class="description">
-      lxc-gentoo is a Linux containers (lxc) Gentoo template script.  It is used to generate Gentoo guests for execution within an lxc (container based virtualisation) environment.
+      Generates Gentoo guests for use within lxc (Linux Containers) environments.
     </div>
+    
+    <hr>
 
-    <p>Script to generate Gentoo guests for use within lxc (Linux Containers) environments.</p><h2>Dependencies</h2>
-<p>lxc-utils, and a running kernel with the relevant options enabled (use lxc-checkconfig to test).</p>
+<h2>Dependencies</h2>
+<p><b>lxc-utils</b>, and a running kernel with the relevant options enabled (use <b>lxc-checkconfig</b> to test).</p>
+
 <h2>Install</h2>
-<p>For use with the lxc-create script, or independently.</p>
+<p>lxc-gentoo can be used with the <b>lxc-create</b> script, or independently.</p>
+
 <h2>License</h2>
-<p>GPLv3</p>
+<p><a href="http://www.gnu.org/licenses/gpl.txt">GPLv3</a></p>
+
 <h2>Authors</h2>
-<p>Julien Sanchez<br/>Walter Stanish<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Please use the issue tracker.</p>
+<ul>
+ <li>Julien Sanchez
+ <li>Walter Stanish
+</ul>
+
+<h2>Issues and Contact</h2>
+<p>Please use the <a href="https://github.com/globalcitizen/lxc-gentoo/issues">issue tracker</a>.</p>
 
 
     <h2>Download</h2>
@@ -70,10 +83,16 @@
       <a href="http://github.com/globalcitizen/lxc-gentoo/zipball/master">zip</a> or
       <a href="http://github.com/globalcitizen/lxc-gentoo/tarball/master">tar</a> formats.
     </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
+
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a> by running:
       <pre>$ git clone git://github.com/globalcitizen/lxc-gentoo</pre>
     </p>
+
+
+<h2>See also</h2>
+<ul>
+ <li><a href="http://en.gentoo-wiki.com/wiki/LXC">LXC @ Gentoo Wiki</a>
+</ul>
 
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/globalcitizen/lxc-gentoo">globalcitizen/lxc-gentoo</a>
