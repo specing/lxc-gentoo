@@ -407,6 +407,9 @@ write_lxc_configuration()
 	# root filesystem location
 	lxc.rootfs = $(readlink -f "$ROOTFS")
 
+	# recent LXC tools default to auto-mounting tmpfs on /dev
+	lxc.autodev = 0
+
 	# mounts that allow us to drop CAP_SYS_ADMIN
 	lxc.mount.entry=proc proc proc ro,nodev,noexec,nosuid 0 0
 	# disabled for security, see http://blog.bofh.it/debian/id_413
