@@ -999,22 +999,17 @@ create()
 		|| die 1 "Error: Failed to set guest root password\n"
 
 	cat <<-EOF
-	All done!
+	all done! (Report bugs to https://github.com/globalcitizen/lxc-gentoo/issues)
 
-	You can run your container with the 'lxc-start -f "$CONFFILE" -n "$NAME"'
-	For host-side networking setup info, see "$ROOTFS/etc/conf.d/net"
+	For host-side networking setup info and information on running containers of
+	other architectures, see the README included with lxc-gentoo.
 
-	To enter your container for setup WITHOUT running it, try:
-	   mount -t proc proc "$ROOTFS/proc"
-	   mount -o bind /dev "$ROOTFS/dev"
-	   chroot "$ROOTFS" /bin/bash
-	   export PS1="(${NAME}) \$PS1"
-	 (${NAME}) #   <-- you are now in the guest
-	... or, start it on the current console with:
-	   lxc-start -f "$CONFFILE" -n "$NAME"
-	... or, start it elsewhere then use 'lxc-console -n "$NAME"' for a shell
-	
-	(Report bugs to https://github.com/globalcitizen/lxc-gentoo/issues )";
+	You can now run the container on the current terminal:
+	 .. 'lxc-start --foreground --rcfile "$CONFFILE" --name "$NAME"'
+	or start it elsewhere/in the background then use
+	 .. 'lxc-console --name "$NAME"' for a root shell
+	you can stop it with 'shutdown -h now' inside the container or on the host:
+	 .. 'lxc-stop [--kill] --name "$NAME"'
 	EOF
 }
 
