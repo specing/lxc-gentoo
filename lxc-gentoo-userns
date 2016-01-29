@@ -1,0 +1,82 @@
+#!/bin/bash
+# AGPLv3 for now
+
+if [[ $# -ne 2 ]]; then
+	printf "usage: %s rootfs id\n" "$0"
+	exit 1
+fi
+
+set -u
+shopt -s globstar
+
+rootfs="$1"
+conffile="$rootfs.conf"
+newconffile="$conffile.new"
+
+id="$2"
+
+if [[ $id -lt 65536 ]]; then
+	(( id = id * 65536 ))
+fi
+
+if [[ ! -d "$rootfs" ]]; then
+	printf "Error: rootfs does not exist\n"
+	exit 1
+fi
+
+# rootfs part
+printf "Cleaning devnodes:\n"
+# devnodes are bind mounted from host:
+for device in "$rootfs/dev/"**; do
+	if [[ -b $device || -c $device ]]; then
+		str="$(stat --printf="%F %t %T" "$device")"
+		printf " device: %s: %s\n" "$str" "$device"
+		rm "$device"
+		touch "$device"
+	fi
+done
+
+
+printf "Running uidmapshift...\n"
+
+uidmapshift -b "$rootfs" 0 "$id" 65536
+printf "root:%s:65536\n" "$id" >> /etc/subuid
+printf "root:%s:65536\n" "$id" >> /etc/subgid
+
+
+
+printf "Processing config file\n"
+mapfile -t < "$conffile"
+
+cat <<EOF >> "$newconffile"
+lxc.id_map = u 0 $id 65536
+lxc.id_map = g 0 $id 65536
+lxc.devttydir =
+EOF
+
+for line in "${MAPFILE[@]}"; do
+	if [[ $line == lxc.cap.drop* ]]; then
+		printf "lxc.cap.drop = sys_module mac_admin mac_override sys_time\n" >> "$newconffile"
+	elif [[ $line == lxc.cgroup.devices.deny* ]]; then
+		: # don't persist it
+	elif [[ $line == lxc.cgroup.devices.allow* ]]; then
+		: # same
+	else
+		printf "%s\n" "$line" >> "$newconffile"
+	fi
+done
+
+cat <<EOF >> "$newconffile"
+# userns device mounts
+lxc.mount.entry = /dev/console dev/console none bind,create=file 0 0
+lxc.mount.entry = /dev/full dev/full none bind,create=file 0 0
+lxc.mount.entry = /dev/null dev/null none bind,create=file 0 0
+lxc.mount.entry = /dev/random dev/random none bind,create=file 0 0
+lxc.mount.entry = /dev/tty dev/tty none bind,create=file 0 0
+lxc.mount.entry = /dev/urandom dev/urandom none bind,create=file 0 0
+lxc.mount.entry = /dev/zero dev/zero none bind,create=file 0 0
+EOF
+
+mv "$conffile" "$conffile.old" && mv "$newconffile" "$conffile"
+chown root:root "$conffile"
+chown root:root "$conffile.old"
